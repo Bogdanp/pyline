@@ -25,7 +25,7 @@ import re
 from argparse import ArgumentParser
 from sys import argv, exit, stdin
 
-def execute_function(function, *args):
+def decorate_function(function, *args):
     """'Decorates' a function by taking its return value and returning
     the group of that return value if it is a MatchObject. If it's not a
     MatchObject then it returns that value."""
@@ -35,10 +35,10 @@ def execute_function(function, *args):
         except AttributeError: return result
     return ''
 
-f = lambda *a: execute_function(re.findall, *a)
-m = lambda *a: execute_function(re.match, *a)
-s = lambda *a: execute_function(re.search, *a)
-S = lambda *a: execute_function(re.sub, *a)
+f = lambda *a: decorate_function(re.findall, *a)
+m = lambda *a: decorate_function(re.match, *a)
+s = lambda *a: decorate_function(re.search, *a)
+S = lambda *a: decorate_function(re.sub, *a)
 
 def evaluate(arguments):
     expression = ' '.join(arguments.expression)
