@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""Run a Python expression on every line of standard input.
+"""
+import re
+
+from argparse import ArgumentParser
+from sys import argv, exit, stdin
+
+def execute_function(function, *args):
+    result = function(*args)
+    if result is not None:
+        try: return result.group()
+        except AttributeError: return result
+    return ''
+
+f = lambda *a: execute_function(re.findall, *a)
+m = lambda *a: execute_function(re.match, *a)
+s = lambda *a: execute_function(re.search, *a)
+S = lambda *a: execute_function(re.sub, *a)
+
+def evaluate(arguments):
+    expression = ' '.join(arguments.expression)
+    for module in arguments.modules.split(','):
+        if module: globals()[module] = __import__(module)
+    for i, L in enumerate(stdin):
+        result = eval(expression)
+        if arguments.print_lines:
+            print(result)
+    return 0
+
+def parse_arguments():
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument('expression', metavar='E', type=str, nargs='*', default=['L'],
+                        help='the expression to be evaluated on every line')
+    parser.add_argument('-m', '--modules', type=str, nargs='?', default='',
+                        help='a comma-separated list of modules to be imported')
+    parser.add_argument('-n', '--no-print', dest='print_lines',
+                        action='store_const', const=False, default=True,
+                        help='don\'t print the evaluated expression for every line')
+    return parser.parse_args()
+
+def main(args=argv):
+    return evaluate(parse_arguments())
+
+if __name__ == '__main__':
+    exit(main())
