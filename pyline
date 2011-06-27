@@ -30,7 +30,7 @@ def execute_function(function, *args):
     if result is not None:
         try: return result.group()
         except AttributeError: return result
-    return ''
+    return None
 
 f = lambda *a: execute_function(re.findall, *a)
 m = lambda *a: execute_function(re.match, *a)
