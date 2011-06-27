@@ -45,7 +45,7 @@ def evaluate(arguments):
         W = words = L.split()
         result = eval(expression)
         if arguments.print_lines:
-            print(result, end='')
+            print(result.rstrip('\n'))
     return 0
 
 def parse_arguments():
