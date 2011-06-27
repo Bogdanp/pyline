@@ -59,7 +59,7 @@ def parse_arguments():
                         help='a comma-separated list of modules to be imported')
     parser.add_argument('-n', '--no-print', dest='print_lines',
                         action='store_const', const=False, default=True,
-                        help='don\'t print the evaluated expression for every line')
+                        help="don't print the evaluated expression for every line")
     return parser.parse_args()
 
 if __name__ == '__main__':
