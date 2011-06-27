@@ -23,7 +23,7 @@
 import re
 
 from argparse import ArgumentParser
-from sys import argv, exit, stdin
+from sys import exit, stdin
 
 def decorate_function(function, *args):
     """'Decorates' a function by taking its return value and returning
