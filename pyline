@@ -45,7 +45,6 @@ def evaluate(arguments):
     for module in arguments.modules.split(','):
         if module: globals()[module] = __import__(module)
     for i, L in enumerate(stdin):
-        W = words = L.split()
         result = str(eval(expression))
         if arguments.print_lines:
             print(result.rstrip('\n'))
